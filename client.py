@@ -2,6 +2,7 @@ from socket import *
 import sys
 import ast
 import threading
+import json
 
 
 def listener_thread_function(socket):
@@ -22,7 +23,7 @@ def sender_thread_function(socket, username):
             'rec': receiver_name,
             'msg': message,
         }
-        socket.send(str(message_to_client).encode())
+        socket.send(str(json.dumps(message_to_client)).encode())
 
 
 if __name__ == '__main__':
@@ -36,7 +37,7 @@ if __name__ == '__main__':
                     'rec': 'server',
                     'msg': '',
                 }
-    client_socket.send(str(message_to_server).encode())
+    client_socket.send(str(json.dumps(message_to_server)).encode())
     reply_from_server = client_socket.recv(1024)
     print('Message from Server: ', reply_from_server)
 
