@@ -1,6 +1,7 @@
 from socket import *
 import ast
 import threading
+import json
 
 
 USER_COUNTER = 0
@@ -45,7 +46,7 @@ def thread_function(socket):
                 'rec': '',
                 'msg': user,
             }
-            connection_socket.send(str(response).encode())
+            connection_socket.send(str(json.dumps(response)).encode())
         else:
             sender_info = []
             for x in USERS:
@@ -57,7 +58,7 @@ def thread_function(socket):
                         if y[0] == message_as_json['rec']:
                             message_without_password = message_as_json
                             message_without_password['pas'] = ""
-                            y[2].send(str(message_without_password).encode())
+                            y[2].send(str(json.dumps(message_without_password)).encode())
 
 
 if __name__ == '__main__':
